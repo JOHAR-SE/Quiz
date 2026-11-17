@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f9;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 850px;
+        margin: auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+      }
+
+      .question {
+        margin-bottom: 25px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+
+      .question p {
+        font-weight: bold;
+        margin-bottom: 12px;
+      }
+
+      label {
+        display: block;
+        padding: 8px;
+        margin: 5px 0;
+        border-radius: 6px;
+      }
+
+      button {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 8px;
+        background: #007bff;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #0056b3;
+      }
+
+      .correct {
+        background: #d4edda;
+        border: 2px solid #28a745;
+      }
+
+      .wrong {
+        background: #f8d7da;
+        border: 2px solid #dc3545;
+      }
+
+      #result {
+        display: none;
+        text-align: center;
+        margin-top: 25px;
+        padding: 20px;
+        border-radius: 10px;
+        font-size: 40px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Quiz</h1>
+
+      <form id="quizForm">
+        <div class="question">
+          <p>1. What does Law mean?</p>
+
+          <label>
+            <input type="radio" name="q1" value="correct" />
+            A. A system of rules enforced through institutions
+          </label>
+
+          <label>
+            <input type="radio" name="q1" />
+            B. A medical procedure
+          </label>
+
+          <label>
+            <input type="radio" name="q1" />
+            C. A patient diagnosis
+          </label>
+
+          <label>
+            <input type="radio" name="q1" />
+            D. A nursing assessment
+          </label>
+        </div>
+
+        <div class="question">
+          <p>
+            2. Which of the following is an example of Criminal Liability
+            offenses against the state or society?
+          </p>
+
+          <label>
+            <input type="radio" name="q2" />
+            A. Negligence
+          </label>
+
+          <label>
+            <input type="radio" name="q2" />
+            B. Vicarious liability
+          </label>
+
+          <label>
+            <input type="radio" name="q2" value="correct" />
+            C. Assault
+          </label>
+
+          <label>
+            <input type="radio" name="q2" />
+            D. Breach of contract
+          </label>
+        </div>
+
+        <div class="question">
+          <p>3. Duty of Care means:</p>
+
+          <label>
+            <input type="radio" name="q3" />
+            A. The right to refuse treatment
+          </label>
+
+          <label>
+            <input type="radio" name="q3" />
+            B. Protecting hospital equipment
+          </label>
+
+          <label>
+            <input type="radio" name="q3" value="correct" />
+            C. The legal obligation to provide reasonable care
+          </label>
+
+          <label>
+            <input type="radio" name="q3" />
+            D. Sharing patient information
+          </label>
+        </div>
+
+        <div class="question">
+          <p>4. Malpractice refers to:</p>
+
+          <label>
+            <input type="radio" name="q4" value="correct" />
+            A. Professional negligence causing injury
+          </label>
+
+          <label>
+            <input type="radio" name="q4" />
+            B. Patient refusal of treatment
+          </label>
+
+          <label>
+            <input type="radio" name="q4" />
+            C. Hospital administration
+          </label>
+
+          <label>
+            <input type="radio" name="q4" />
+            D. Public trust
+          </label>
+        </div>
+
+        <div class="question">
+          <p>
+            5. What is the main difference between a Plaintiff and a Defendant?
+          </p>
+
+          <label>
+            <input type="radio" name="q5" />
+            A. The Plaintiff defends the case
+          </label>
+
+          <label>
+            <input type="radio" name="q5" value="correct" />
+            B. The Plaintiff brings the lawsuit, while the Defendant is being
+            sued
+          </label>
+
+          <label>
+            <input type="radio" name="q5" />
+            C. The Defendant is the judge
+          </label>
+
+          <label>
+            <input type="radio" name="q5" />
+            D. Both have the same role
+          </label>
+        </div>
+
+        <button type="button" onclick="checkQuiz()">Submit Quiz</button>
+      </form>
+
+      <div id="result"></div>
+    </div>
+
+    <script>
+      function checkQuiz() {
+        let score = 0;
+
+        document.querySelectorAll("label").forEach((label) => {
+          label.classList.remove("correct", "wrong");
+        });
+
+        let correctAnswers = document.querySelectorAll(
+          'input[value="correct"]',
+        );
+
+        correctAnswers.forEach((correct) => {
+          correct.parentElement.classList.add("correct");
+
+          if (correct.checked) {
+            score++;
+          } else {
+            let selected = document.querySelector(
+              'input[name="' + correct.name + '"]:checked',
+            );
+
+            if (selected) {
+              selected.parentElement.classList.add("wrong");
+            }
+          }
+        });
+
+        let result = document.getElementById("result");
+
+        result.style.display = "block";
+
+        if (score === 5) {
+          result.style.background = "#d4edda";
+          result.style.color = "#155724";
+        } else if (score >= 3) {
+          result.style.background = "#fff3cd";
+          result.style.color = "#856404";
+        } else {
+          result.style.background = "#f8d7da";
+          result.style.color = "#721c24";
+        }
+
+        result.innerHTML = score + " / 5";
+
+        document.querySelector("button").disabled = true;
+        document.querySelector("button").innerText = "Quiz Submitted";
+
+      }
+    </script>
+  </body>
+</html>
